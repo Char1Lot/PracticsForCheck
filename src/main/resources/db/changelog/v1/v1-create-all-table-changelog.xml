@@ -1,0 +1,38 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="v1-1" author="Denis Elistratov">
+        <createTable tableName="dictionary">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="code" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="description" type="varchar(50)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="data">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="dictionary_id" type="bigint">
+                <constraints foreignKeyName="fk_dictionary_id" references="dictionary(id)" deleteCascade="true"/>
+            </column>
+
+            <column name="code" type="varchar(50)"/>
+
+            <column name="value" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

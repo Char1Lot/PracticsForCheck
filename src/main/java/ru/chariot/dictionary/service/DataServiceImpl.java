@@ -10,40 +10,40 @@ import java.util.List;
 @AllArgsConstructor
 public class DataServiceImpl implements DataService {
 
-    DataRepository datareposetory;
+    DataRepository dataRepository;
 
     @Override
     public Data saveData(Data data) {
-        return datareposetory.save(data);
+        return dataRepository.save(data);
     }
 
     @Override
     public Data findDataById(Long id) {
-        return datareposetory.findById(id).get();
+        return dataRepository.findById(id).get();
     }
 
     @Override
     public List<Data> findAllData(){
-        return datareposetory.findAll();
+        return dataRepository.findAll();
     }
 
     @Override
     public Data updateData(Long id, Data data) {
-        Data newData = datareposetory.findById(id).get();
+        Data newData = dataRepository.findById(id).get();
 
         newData.setDictionaryId(data.getDictionaryId());
         newData.setCode(data.getCode());
         newData.setValue(data.getValue());
 
-        return datareposetory.save(newData);
+        return dataRepository.save(newData);
     }
 
     @Override
     public Data deleteData(Long id) {
 
-        Data deletedData = datareposetory.findById(id).get();
+        Data deletedData = dataRepository.findById(id).get();
 
-        datareposetory.delete(datareposetory.findById(id).get());
+        dataRepository.delete(dataRepository.findById(id).get());
 
         return deletedData;
     }

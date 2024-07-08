@@ -2,17 +2,15 @@ package ru.chariot.dictionary.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.chariot.dictionary.model.Dictionary;
 import ru.chariot.dictionary.model.Data;
-import ru.chariot.dictionary.reposetory.DataReposetory;
-
+import ru.chariot.dictionary.reposetory.DataRepository;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class DataServiceImp implements DataService {
+public class DataServiceImpl implements DataService {
 
-    DataReposetory datareposetory;
+    DataRepository datareposetory;
 
     @Override
     public Data saveData(Data data) {
@@ -33,7 +31,7 @@ public class DataServiceImp implements DataService {
     public Data updateData(Long id, Data data) {
         Data newData = datareposetory.findById(id).get();
 
-        newData.setDictionary_id(data.getDictionary_id());
+        newData.setDictionaryId(data.getDictionaryId());
         newData.setCode(data.getCode());
         newData.setValue(data.getValue());
 

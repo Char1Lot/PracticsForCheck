@@ -3,7 +3,6 @@ package ru.chariot.dictionary.service;
 import ru.chariot.dictionary.model.Data;
 
 import java.util.List;
-import java.util.Map;
 
 public interface DataService {
 

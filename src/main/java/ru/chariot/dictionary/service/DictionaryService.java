@@ -1,9 +1,7 @@
 package ru.chariot.dictionary.service;
 
 import ru.chariot.dictionary.model.Dictionary;
-
 import java.util.List;
-import java.util.Map;
 
 public interface DictionaryService {
 

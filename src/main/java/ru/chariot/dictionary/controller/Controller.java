@@ -3,6 +3,8 @@ package ru.chariot.dictionary.controller;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,8 @@ public class Controller {
 
     DictionaryService dictionaryService;
     DataService dataService;
+
+    final Logger logger = LoggerFactory.getLogger(Controller.class);
 
     @GetMapping("/{dictionaryId}")
     @Tag(name = "Получение записи", description = "Получение записи из таблицы dictionary основываясь на ее уникальном идентификаторе, тело запроса не запрашивается")

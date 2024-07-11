@@ -35,4 +35,10 @@ public class Data {
     @Schema(name = "value", example = "test", required = true)
     private String value;
 
+    public boolean isBreak(){
+
+        return code == "" || id == null || dictionaryId == null || value == "";
+
+    }
+
 }

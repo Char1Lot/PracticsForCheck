@@ -31,4 +31,8 @@ public class Dictionary {
     @Schema(name = "description", example = "test", required = true)
     private String description;
 
+    public boolean isBreak(){
+        return id == null || code == "" || description == "";
+    }
+
 }

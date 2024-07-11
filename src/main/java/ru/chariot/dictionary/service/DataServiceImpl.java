@@ -22,52 +22,67 @@ public class DataServiceImpl implements DataService {
 
                 "Method : saveData was called with arguments : " +
 
-                "\n\t id : {} " +
-                "\n\t dictionaryId : {} " +
-                "\n\t code : {} " +
-                "\n\t value : {} " +
-                "\n\n\t return object with arguments : " +
-                "\n\n\t\t id : {}" +
-                "\n\t\t dictionaryId : {}" +
-                "\n\t\t code : {}" +
-                "\n\t\t value : {}",
-
-                data.getId(),
-                data.getDictionaryId(),
-                data.getCode(),
-                data.getValue(),
-                dataRepository.save(data).getId(),
-                dataRepository.save(data).getDictionaryId(),
-                dataRepository.save(data).getCode(),
-                dataRepository.save(data).getValue()
+                        "\n\t id : ${data.getId()} " +
+                        "\n\t dictionaryId : ${data.getDictionaryId()} " +
+                        "\n\t code : ${data.getCode()} " +
+                        "\n\t value : ${data.getValue()} "
 
         );
 
-        return dataRepository.save(data);
+        if(data != null && !data.isBreak()) {
+
+            Data savedData = dataRepository.save(data);
+
+            logger.info(
+
+                    "Method was successfully called and return Data :" +
+
+                            "\n\n\t\t id : ${savedData.getId()}" +
+                            "\n\t\t dictionaryId : ${savedData.getDictionaryId()}" +
+                            "\n\t\t code : ${savedData.getCode()}" +
+                            "\n\t\t value : ${savedData.getValue()}"
+
+            );
+
+
+
+            return savedData;
+
+        }
+
+        logger.info("Method : saveData was called but an argument was null");
+
+        return null;
 
     }
 
     @Override
     public Data findDataById(Long id) {
 
-        logger.info(
+        if(id > 0) {
 
-                "Method : findDataById was called with id : {} \n\t return object with arguments : " +
+            Data foundedData = dataRepository.findById(id).get();
 
-                "\n\t\t id : {}" +
-                "\n\t\t dictionaryId : {}" +
-                "\n\t\t code : {}" +
-                "\n\t\t value : {}",
+            logger.info(
 
-                id,
-                dataRepository.findById(id).get().getId(),
-                dataRepository.findById(id).get().getDictionaryId(),
-                dataRepository.findById(id).get().getCode(),
-                dataRepository.findById(id).get().getValue()
+                    "Method : findDataById was called with argument: " +
 
-        );
+                            "\n id : ${id} " +
+                            "return Data : " +
+                            "\n\t id : ${foundedData.getId()}" +
+                            "\n\t dictionaryId : ${foundedData.getDictionaryId()}" +
+                            "\n\t code : ${foundedData.getCode()}" +
+                            "\n\t value : ${foundedData.getValue()}"
 
-        return dataRepository.findById(id).get();
+            );
+
+            return foundedData;
+
+        }
+
+        logger.info("Method findDataById was called but an argument was less than 0 (id < 0)");
+
+        return null;
 
     }
 
@@ -76,9 +91,9 @@ public class DataServiceImpl implements DataService {
 
         logger.info(
 
-                "Method : findAllData was called and return : {}",
+                "Method : findAllData was called and return list of Data : " +
 
-                dataRepository.findAll()
+                        "\n {dataRepository.findAll()}"
 
         );
 
@@ -88,30 +103,27 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public Data updateData(Long id, Data data) {
+
         Data inputData = dataRepository.findById(id).get();
+
+        if(id < 1 || data.isBreak()){
+            logger.info(
+
+                    "Method updateData was called but an argument was null"
+
+            );
+
+            return null;
+        }
 
         logger.info(
 
-                "Method : updateData was called, old value : " +
+                "Method : updateData was called, old value of Data : " +
 
-                "\n\t id : {}" +
-                "\n\t dictionaryId : {}" +
-                "\n\t code : {}" +
-                "\n\t value : {}" +
-                "New value :" +
-                "\n\t id : {}" +
-                "\n\t dictionaryId : {}" +
-                "\n\t code : {}" +
-                "\n\t value : {}",
-
-                dataRepository.findById(id).get().getId(),
-                dataRepository.findById(id).get().getDictionaryId(),
-                dataRepository.findById(id).get().getCode(),
-                dataRepository.findById(id).get().getValue(),
-                data.getId(),
-                data.getDictionaryId(),
-                data.getClass(),
-                data.getValue()
+                        "\n\t id : ${inputData.getId()}" +
+                        "\n\t dictionaryId : ${inputData.getDictionaryId()}" +
+                        "\n\t code : ${inputData.getCode()}" +
+                        "\n\t value : ${inputData.getValue()}"
 
         );
 
@@ -119,27 +131,54 @@ public class DataServiceImpl implements DataService {
         inputData.setCode(data.getCode());
         inputData.setValue(data.getValue());
 
-        return dataRepository.save(inputData);
+        logger.info(
+
+                "New value of Data :" +
+
+                        "\n\t id : ${inputData.getId()}" +
+                        "\n\t dictionaryId : ${inputData.getDictionaryId()}" +
+                        "\n\t code : ${inputData.getCode()}" +
+                        "\n\t value : ${inputData.getValue()}"
+
+        );
+
+        Data savedData = dataRepository.save(inputData);
+
+        return savedData;
 
     }
 
     @Override
     public Data deleteData(Long id) {
 
-        logger.info(
+        if(id > 0) {
 
-                "Method : deleteData was called with argument : " +
-                "\n\t id : {}",
+            Data deletedData = dataRepository.findById(id).get();
 
-                id
+            logger.info(
 
-        );
+                    "Method : deleteData was called with argument : " +
 
-        Data deletedData = dataRepository.findById(id).get();
+                            "\n\t id : ${id}" +
 
-        dataRepository.delete(dataRepository.findById(id).get());
+                            "return deleted object : " +
 
-        return deletedData;
+                            "\n\t id : ${deletedData.getId()}" +
+                            "\n\t dictionaryId : ${deletedData.getDictionaryId}" +
+                            "\n\t code : ${deletedData.getCode()}" +
+                            "\n\t value : ${deletedData.getValue()}"
+
+            );
+
+            dataRepository.delete(dataRepository.findById(id).get());
+
+            return deletedData;
+
+        }
+
+        logger.info("Method deleteData was called but an argument less than 0 (id < 0)");
+
+        return null;
 
     }
 }
